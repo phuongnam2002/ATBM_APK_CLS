@@ -37,3 +37,10 @@ def _setup_logger():
 
 
 logger = _setup_logger()
+
+
+def load_tokenizer(args):
+    return MODEL_CLASSES[args.model_type][2].from_pretrained(
+        args.model_name_or_path,
+        use_fast=args.use_fast_tokenizer
+    )
