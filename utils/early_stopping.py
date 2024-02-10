@@ -24,10 +24,8 @@ class EarlyStopping:
         self.val_loss_min = np.Inf
 
     def __call__(self, val_loss, model, args):
-        if args.tuning_metric == "loss":
-            score = -val_loss
-        else:
-            score = val_loss
+        score = -val_loss
+
         if self.best_score is None:
             self.best_score = score
             self.save_checkpoint(val_loss, model, args)
@@ -44,14 +42,9 @@ class EarlyStopping:
     def save_checkpoint(self, val_loss, model, args):
         """Saves model when validation loss decreases or accuracy/f1 increases."""
         if self.verbose:
-            if args.tuning_metric == "loss":
-                logger.info(
-                    f"Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ..."
-                )
-            else:
-                logger.info(
-                    f"{args.tuning_metric} increased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ..."
-                )
+            logger.info(
+                f"Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ..."
+            )
         model.save_pretrained(args.model_dir)
         torch.save(args, os.path.join(args.model_dir, "training_args.bin"))
         self.val_loss_min = val_loss

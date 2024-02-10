@@ -12,7 +12,7 @@ CUDA_VISIBLE_DEVICES=0 python train.py \
         --wandb_run_name $wandb_run_name \
         --seed $s \
         --num_train_epochs 10 \
-        --train_batch_size 1024 \
-        --max_seq_len 256 \
+        --train_batch_size 256 \
+        --max_seq_len 64 \
         --learning_rate $lr \
         --early_stopping 25

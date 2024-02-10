@@ -72,9 +72,6 @@ class APKTrainer:
         train_iterator = trange(int(self.args.num_train_epochs), desc="Epoch")
         early_stopping = EarlyStopping(patience=self.args.early_stopping, verbose=True)
 
-        # Automatic Mixed Precision
-        scaler = torch.cuda.amp.GradScaler()
-
         for _ in train_iterator:
             epoch_iterator = tqdm(
                 train_dataloader, desc="Iteration", position=0, leave=True
@@ -92,21 +89,21 @@ class APKTrainer:
                     "is_train": True
                 }
 
-                with torch.cuda.amp.autocast():
-                    loss = self.model(**inputs)
+                loss = self.model(**inputs)
 
-                scaler.scale(loss).backward()
+                loss.backward()
                 wandb.log({"Train Loss": loss.item()})
 
                 torch.nn.utils.clip_grad_norm_(
                     self.model.parameters(), self.args.max_grad_norm
                 )
 
-                scaler.step(optimizer)
+                optimizer.step()
                 scheduler.step()
-                scaler.update()
 
                 self.model.zero_grad()
+                optimizer.zero_grad()
+
                 global_step += 1
 
                 early_stopping(loss.item(), self.model, self.args)

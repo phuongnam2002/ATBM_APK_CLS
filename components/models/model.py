@@ -4,9 +4,11 @@ import torch
 import torch.nn as nn
 from transformers import PretrainedConfig
 from transformers.models.roberta.modeling_roberta import (
+    RobertaModel,
     RobertaPreTrainedModel,
-    RobertaForSequenceClassification
 )
+
+from components.models.module import MLPLayer
 
 
 class APKModel(RobertaPreTrainedModel):
@@ -22,9 +24,11 @@ class APKModel(RobertaPreTrainedModel):
         self.args = args
         self.config = config
 
-        self.loss = nn.BCELoss()
+        self.mlp = MLPLayer(config)
         self.activation = nn.Sigmoid()
-        self.roberta = RobertaForSequenceClassification.from_pretrained(args.model_name_or_path, num_labels=2)
+        self.loss = nn.BCEWithLogitsLoss()
+
+        self.roberta = RobertaModel(config, add_pooling_layer=True)
 
         # The LM head weights require special treatment only when they are tied with the word embeddings
         self.update_keys_to_ignore(config, ["lm_head.decoder.weight"])
@@ -41,8 +45,9 @@ class APKModel(RobertaPreTrainedModel):
         outputs = self.roberta(
             input_ids,
             attention_mask=attention_mask,
-        ).logits
+        ).pooler_output
 
+        outputs = self.mlp(outputs)
         outputs = self.activation(outputs)
 
         return outputs
