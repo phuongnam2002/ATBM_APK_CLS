@@ -19,7 +19,7 @@ class APKModel(RobertaPreTrainedModel):
         r"lm_head.decoder.bias",
     ]
 
-    def __init__(self, config: PretrainedConfig, args):
+    def __init__(self, config: PretrainedConfig, args: None):
         super().__init__(config)
         self.args = args
         self.config = config

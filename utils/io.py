@@ -28,7 +28,16 @@ def load_apk(file_path: str):
         methods = dvm.get_methods_class(x)
         codes.extend(methods)
 
-    return package, activities, permissions, providers, receivers, codes
+    data = []
+
+    data.extend(package)
+    data.extend(activities)
+    data.extend(permissions)
+    data.extend(providers)
+    data.extend(receivers)
+    data.extend(codes)
+
+    return " ".join(data)
 
 
 def load_file(file_path: str):
