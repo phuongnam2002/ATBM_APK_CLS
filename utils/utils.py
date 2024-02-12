@@ -10,11 +10,13 @@ from components.models.model import APKModel
 MODEL_CLASSES = {
     "roberta-base": (RobertaConfig, APKModel, AutoTokenizer),
     "roberta-large": (RobertaConfig, APKModel, AutoTokenizer),
+    "malware-url": (RobertaConfig, APKModel, AutoTokenizer),
 }
 
 MODEL_PATH_MAP = {
     "roberta-base": "roberta-base",
     "roberta-large": "roberta-large",
+    "malware-url": "elftsdmr/malware-url-detect"
 }
 
 
