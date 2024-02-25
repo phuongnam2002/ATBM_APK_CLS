@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-image: url({% static "bg_safe_img.webp" %});
+        background-size: cover; /* Cover the entire page */
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    </style>
+    <title>APK Scanner</title>
+  </head>
+
+  <body>
+    <div style="text-align: center; margin-top: 50px">
+      <h1 class="swing">APK File Safety</h1>
+      <p>Your APK file does not contain malicious code. It is safe to use.</p>
+      <img
+        src="{% static 'safe_img.webp' %}"
+        alt="An Toàn"
+        class="fade-in"
+        style="width: 200px; height: auto"
+      />
+      <p class="grays"><a href="/">Back to homepage</a></p>
+    </div>
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes swing {
+        0% {
+          transform: rotate(0deg);
+        }
+        20% {
+          transform: rotate(15deg);
+        }
+        40% {
+          transform: rotate(-10deg);
+        }
+        60% {
+          transform: rotate(5deg);
+        }
+        80% {
+          transform: rotate(-5deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 2s;
+        margin: 30px auto;
+        border-radius: 8px;
+        border: 3px solid #262626;
+        transition: 2s;
+      }
+
+      .fade-in:hover {
+        scale: 1.1;
+        border: 3px solid #e0dddd;
+      }
+
+      .swing {
+        display: inline-block;
+        animation: swing 2s infinite;
+        transform: translateY(-20px);
+      }
+
+      @font-face {
+        font-family: "Rocher";
+        src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
+      }
+
+      body {
+        font-family: "Rocher";
+        text-align: center;
+        font-size: 50px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h1 {
+        margin: 0;
+      }
+
+      @font-palette-values --Grays {
+        font-family: Rocher;
+        base-palette: 9;
+      }
+
+      @font-palette-values --Purples {
+        font-family: Rocher;
+        base-palette: 6;
+      }
+
+      @font-palette-values --Mint {
+        font-family: Rocher;
+        base-palette: 7;
+      }
+
+      .grays {
+        font-palette: --Grays;
+      }
+
+      .purples {
+        font-palette: --Purples;
+      }
+
+      .mint {
+        font-palette: --Mint;
+      }
+    </style>
+  </body>
+</html>

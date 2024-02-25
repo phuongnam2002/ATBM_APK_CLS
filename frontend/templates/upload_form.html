@@ -1,19 +1,446 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      input[type="file"]::file-selector-button {
+        margin-right: 20px;
+        border: none;
+        background: #084cdf;
+        padding: 10px 16px;
+        border-radius: 10px;
+        color: #fff;
+        cursor: pointer;
+        margin: 4px;
+        transition: background 0.2s ease-in-out;
+      }
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Files</title>
-</head>
+      input[type="file"]::file-selector-button:hover {
+        background: #0d45a5;
+      }
 
-<body>
-    <form method='post' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit">
-    </form>
-</body>
+      .main {
+        position: relative;
+        left: 0;
+        top: 30vh;
+        background: #f1f1f1;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        opacity: 0.95;
+        transition: 1s;
+      }
 
+      .main:hover {
+        opacity: 1;
+        scale: 1.03;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-image: url({% static "background.webp" %});
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      #submitBtn {
+        position: relative;
+        right: -80%;
+      }
+
+      @import url("https://fonts.googleapis.com/css?family=Roboto:700");
+      $size: 150px;
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #ffd399;
+      }
+
+      @import url("https://fonts.googleapis.com/css?family=Roboto:700");
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #ffd399;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        margin: 0 auto;
+        width: 50%;
+        position: absolute;
+        top: 50vh;
+        left: 25vw;
+        visibility: hidden;
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotateX(-37.5deg) rotateY(45deg);
+        }
+        50% {
+          transform: rotateX(-37.5deg) rotateY(405deg);
+        }
+        100% {
+          transform: rotateX(-37.5deg) rotateY(405deg);
+        }
+      }
+      .cube,
+      .cube * {
+        position: absolute;
+        width: 151px;
+        height: 151px;
+      }
+      .sides {
+        animation: rotate 3s ease infinite;
+        animation-delay: 0.8s;
+        transform-style: preserve-3d;
+        transform: rotateX(-37.5deg) rotateY(45deg);
+      }
+      .cube .sides * {
+        box-sizing: border-box;
+        background-color: rgba(29, 76, 166, 0.5);
+        border: 15px solid white;
+      }
+      .cube .sides .top {
+        animation: top-animation 3s ease infinite;
+        animation-delay: 0ms;
+        transform: rotateX(90deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes top-animation {
+        0% {
+          opacity: 1;
+          transform: rotateX(90deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateX(90deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateX(90deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateX(90deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateX(90deg) translateZ(150px);
+        }
+      }
+      .cube .sides .bottom {
+        animation: bottom-animation 3s ease infinite;
+        animation-delay: 0ms;
+        transform: rotateX(-90deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes bottom-animation {
+        0% {
+          opacity: 1;
+          transform: rotateX(-90deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateX(-90deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateX(-90deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateX(-90deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateX(-90deg) translateZ(150px);
+        }
+      }
+      .cube .sides .front {
+        animation: front-animation 3s ease infinite;
+        animation-delay: 100ms;
+        transform: rotateY(0deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes front-animation {
+        0% {
+          opacity: 1;
+          transform: rotateY(0deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateY(0deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateY(0deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateY(0deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(0deg) translateZ(150px);
+        }
+      }
+      .cube .sides .back {
+        animation: back-animation 3s ease infinite;
+        animation-delay: 100ms;
+        transform: rotateY(-180deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes back-animation {
+        0% {
+          opacity: 1;
+          transform: rotateY(-180deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateY(-180deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateY(-180deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateY(-180deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(-180deg) translateZ(150px);
+        }
+      }
+      .cube .sides .left {
+        animation: left-animation 3s ease infinite;
+        animation-delay: 100ms;
+        transform: rotateY(-90deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes left-animation {
+        0% {
+          opacity: 1;
+          transform: rotateY(-90deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateY(-90deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateY(-90deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateY(-90deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(-90deg) translateZ(150px);
+        }
+      }
+      .cube .sides .right {
+        animation: right-animation 3s ease infinite;
+        animation-delay: 100ms;
+        transform: rotateY(90deg) translateZ(150px);
+        animation-fill-mode: forwards;
+        transform-origin: 50% 50%;
+      }
+      @keyframes right-animation {
+        0% {
+          opacity: 1;
+          transform: rotateY(90deg) translateZ(150px);
+        }
+        20% {
+          opacity: 1;
+          transform: rotateY(90deg) translateZ(75px);
+        }
+        70% {
+          opacity: 1;
+          transform: rotateY(90deg) translateZ(75px);
+        }
+        90% {
+          opacity: 1;
+          transform: rotateY(90deg) translateZ(150px);
+        }
+        100% {
+          opacity: 1;
+          transform: rotateY(90deg) translateZ(150px);
+        }
+      }
+    </style>
+    <title>APK Scanner</title>
+  </head>
+
+  <body id="body">
+    <div class="container" id="container">
+      <div class="cube">
+        <div class="sides">
+          <div class="top"></div>
+          <div class="right"></div>
+          <div class="bottom"></div>
+          <div class="left"></div>
+          <div class="front"></div>
+          <div class="back"></div>
+        </div>
+      </div>
+    </div>
+    <div class="main max-w-4xl mx-auto py-5" id="main">
+      <h1 class="text-2xl text-gray-800 mb-3">Upload a APK File</h1>
+      <hr class="mt-5" />
+      <form method="post" id="fileForm" enctype="multipart/form-data">
+        {% csrf_token %} {{ form }}
+        <div class="mt-3">
+          <div class="mt-3">
+            <div class="shadow w-full bg-gray-100">
+              <div
+                id="progressBar"
+                class="bg-blue-500 text-xs leading-none py-1 text-center text-gray-800"
+                style="width: 0%"
+              >
+                0%
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <h3 id="status"></h3>
+          </div>
+        </div>
+        <hr class="mt-5" />
+        <button
+          type="submit"
+          id="submitBtn"
+          class="mt-5 rounded shadow-md px-3 py-1 text-lg text-white bg-blue-500 hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </form>
+      <hr class="mt-5" />
+    </div>
+    <script>
+      let submitting = false;
+      let file = null;
+
+      function setIsSubmitting(val) {
+        submitting = val;
+      }
+
+      function setFile(val) {
+        file = val;
+      }
+
+      _("id_file").addEventListener("change", (event) => {
+        setFile(event.target.files[0]);
+      });
+
+      _("submitBtn").addEventListener("click", (event) => {
+        handleSubmit(event);
+        _("submitBtn").disabled = true;
+      });
+
+      const handleSubmit = async (event) => {
+        setIsSubmitting(true);
+
+        try {
+          uploadFile();
+        } catch (err) {
+          setIsSubmitting(false);
+          console.log(err);
+          alert("There was an error uploading your file.");
+          throw err;
+        }
+
+        setIsSubmitting(false);
+      };
+
+      function _(el) {
+        return document.getElementById(el);
+      }
+
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      function uploadFile() {
+        const csrfToken = getCookie("csrftoken");
+        var formdata = new FormData();
+        formdata.append("file", file);
+        var ajax = new XMLHttpRequest();
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.addEventListener("loadend", loadendHandler, false);
+        ajax.open("PUT", "/fake/");
+        ajax.setRequestHeader("Content-Type", file.type);
+        ajax.setRequestHeader("x-amz-acl", "public-read");
+        ajax.setRequestHeader("X-CSRFToken", csrfToken);
+        ajax.send(formdata);
+        _("main").style.visibility = "hidden";
+      }
+
+      async function submitForm() {
+        _("container").style.visibility = "visible";
+        _("fileForm").submit();
+      }
+
+      async function loadendHandler(event) {
+        _("submitBtn").disabled = false;
+
+        await submitForm();
+      }
+
+      function progressHandler(event) {
+        var percent = Math.round((event.loaded / event.total) * 100);
+        _("progressBar").style.width = `${percent}%`;
+        _("progressBar").innerText = `${percent}%`;
+        _("status").innerHTML = percent + "% uploaded... please wait";
+      }
+
+      function completeHandler(event) {
+        _("status").innerHTML = event.target.responseText;
+        _("progressBar").style.width = 0;
+        _("progressBar").innerText = "0%";
+      }
+
+      function errorHandler(event) {
+        _("status").innerHTML = "Upload Failed";
+      }
+
+      function abortHandler(event) {
+        _("status").innerHTML = "Upload Aborted";
+      }
+    </script>
+  </body>
 </html>

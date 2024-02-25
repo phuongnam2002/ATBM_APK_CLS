@@ -7,7 +7,6 @@ class FileUploadModelForm(forms.ModelForm):
     class Meta:
         model = File
         fields = ('file',)
-
         widgets = {
             'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
@@ -16,5 +15,5 @@ class FileUploadModelForm(forms.ModelForm):
         file = self.cleaned_data['file']
         ext = file.name.split('.')[-1].lower()
         if ext not in ['apk']:
-            raise forms.ValidationError("File type not!")
+            raise forms.ValidationError("")
         return file
