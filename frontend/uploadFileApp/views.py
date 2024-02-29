@@ -1,4 +1,3 @@
-import os
 import torch
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -41,7 +40,6 @@ def model_form_upload(request):
             input_ids = torch.tensor([input_ids], dtype=torch.long, device=device)
             attention_mask = torch.tensor([attention_mask], dtype=torch.long, device=device)
 
-
             with torch.no_grad():
                 inputs = {
                     'input_ids': input_ids,
@@ -52,16 +50,16 @@ def model_form_upload(request):
 
                 label = torch.argmax(logits).tolist()
 
-
             if label == 1:
-                return render(request, 'accepted.html')
-            else:
                 return render(request, 'rejected.html')
+            else:
+                return render(request, 'accepted.html')
 
     else:
         form = forms.FileUploadModelForm()
 
     return render(request, 'upload_form.html', {'form': form})
 
+
 def loader(request):
-    return HttpResponse("");
+    return HttpResponse("")

@@ -1,17 +1,6 @@
 import os
 import logging
-
-from transformers import (
-    AutoTokenizer,
-    RobertaConfig
-)
-from components.models.model import APKModel
-
-MODEL_CLASSES = {
-    "roberta-base": (RobertaConfig, APKModel, AutoTokenizer),
-    "roberta-large": (RobertaConfig, APKModel, AutoTokenizer),
-    "malware-url": (RobertaConfig, APKModel, AutoTokenizer),
-}
+from transformers import AutoTokenizer
 
 MODEL_PATH_MAP = {
     "roberta-base": "roberta-base",
@@ -42,7 +31,7 @@ logger = _setup_logger()
 
 
 def load_tokenizer(args):
-    return MODEL_CLASSES[args.model_type][2].from_pretrained(
+    return AutoTokenizer.from_pretrained(
         args.model_name_or_path,
         use_fast=args.use_fast_tokenizer
     )

@@ -4,8 +4,9 @@ import wandb
 import argparse
 from transformers import set_seed
 from trainers.trainer import APKTrainer
+from components.models.model import Transformers
 from components.dataset.dataset import APKDataset
-from utils.utils import MODEL_CLASSES, MODEL_PATH_MAP, load_tokenizer, logger
+from utils.utils import MODEL_PATH_MAP, load_tokenizer, logger
 
 
 def main(args):
@@ -20,16 +21,8 @@ def main(args):
 
     # Load tokenizer and model
     tokenizer = load_tokenizer(args)
-    config_class, model_class, _ = MODEL_CLASSES[args.model_type]
 
-    model_config = config_class.from_pretrained(args.model_name_or_path)
-    model = model_class.from_pretrained(
-        args.model_name_or_path,
-        torch_dtype=args.compute_dtype,
-        config=model_config,
-        device_map=args.device,
-        args=args,
-    )
+    model = Transformers(args, tokenizer).to(args.device)
 
     logger.info(model)
     logger.info(model.dtype)
@@ -72,12 +65,11 @@ if __name__ == "__main__":
         "--model_type",
         default="roberta-base",
         type=str,
-        help="Model type selected in the list: " + ", ".join(MODEL_CLASSES.keys()),
     )
     parser.add_argument(
         "--wandb_project",
         type=str,
-        default="namdp",
+        default="Nhom1",
         help="Name of the Weight and Bias project.",
     )
     parser.add_argument(
@@ -136,8 +128,6 @@ if __name__ == "__main__":
         default=True,
         help="Toggle whether to use pinned memory in the dataloader.",
     )
-
-    # Tokenizer Configuration
     parser.add_argument(
         "--max_seq_len",
         default=64,
@@ -145,13 +135,37 @@ if __name__ == "__main__":
         help="The maximum total input sequence length for input after tokenization.",
     )
     parser.add_argument(
+        "--d_model",
+        default=768,
+        type=int,
+        help="The embedding size of each token in Transformers.",
+    )
+    parser.add_argument(
+        "--hidden_size",
+        default=768,
+        type=int,
+    )
+    parser.add_argument(
+        "--dropout_rate",
+        default=0.1,
+        type=float,
+    )
+    parser.add_argument(
+        "--eps",
+        default=1e9,
+        type=float,
+    )
+    parser.add_argument(
+        "--num_heads",
+        default=12,
+        type=int,
+    )
+    parser.add_argument(
         "--use_fast_tokenizer",
         default=False,
         type=bool,
         help="Whether to use the fast tokenizer. If set to True, a faster tokenizer will be used for tokenizing the input data. This can improve the performance of tokenization but may sacrifice some tokenization quality. If set to False, a slower but more accurate tokenizer will be used. Default value is True.",
     )
-
-    # Optimizer Configuration
     parser.add_argument(
         "--learning_rate",
         default=1e-5,

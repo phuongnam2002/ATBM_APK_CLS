@@ -48,7 +48,6 @@ class APKTrainer:
         else:
             t_total = (len(train_dataloader) * self.args.num_train_epochs)
 
-        # Prepare optimizer and schedule (linear warmup and decay)
         optimizer = self.get_optimizer()
 
         scheduler = get_scheduler(
@@ -86,7 +85,7 @@ class APKTrainer:
                     "input_ids": batch[0],
                     "attention_mask": batch[1],
                     "labels": batch[2],
-                    "is_train": True
+                    "train": True
                 }
 
                 loss = self.model(**inputs)

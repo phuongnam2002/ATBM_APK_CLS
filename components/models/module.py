@@ -1,12 +1,11 @@
 import torch.nn as nn
-from transformers import PretrainedConfig
 
 
 class MLPLayer(nn.Module):
-    def __init__(self, config: PretrainedConfig):
+    def __init__(self, hidden_size):
         super().__init__()
 
-        self.linear = nn.Linear(config.hidden_size, 2)
+        self.linear = nn.Linear(hidden_size, 2)
 
     def forward(self, x):
         x = self.linear(x)

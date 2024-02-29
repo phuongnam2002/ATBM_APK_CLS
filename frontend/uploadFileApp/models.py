@@ -33,19 +33,19 @@ def load_apk(file_path: str):
     permissions = apk.get_permissions()
 
     # Extract code
-    codes = []
-
-    classes_dex = apk.get_dex()
-
-    dvm = DEX(classes_dex)
-
-    classes = dvm.get_classes()
-
-    for x in classes:
-        methods = dvm.get_methods_class(x)
-        codes.extend(methods)
-
-        break
+    # codes = []
+    #
+    # classes_dex = apk.get_dex()
+    #
+    # dvm = DEX(classes_dex)
+    #
+    # classes = dvm.get_classes()
+    #
+    # for x in classes:
+    #     methods = dvm.get_methods_class(x)
+    #     codes.extend(methods)
+    #
+    #     break
 
     data = []
 
@@ -54,7 +54,7 @@ def load_apk(file_path: str):
     data.extend(permissions)
     data.extend(providers)
     data.extend(receivers)
-    data.extend(codes)
+    # data.extend(codes)
 
     return " ".join(data)
 
