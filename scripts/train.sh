@@ -15,7 +15,7 @@ CUDA_VISIBLE_DEVICES=2 python train.py \
         --train_batch_size 512 \
         --max_seq_len 128 \
         --learning_rate $lr \
-        --early_stopping 250 \
+        --early_stopping 10 \
         --d_model 768 \
         --hidden_size 768 \
         --num_heads 12 \
