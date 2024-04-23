@@ -263,7 +263,7 @@ class Transformers(nn.Module):
         self.encoder = Encoder(args=args, tokenizer=tokenizer)
         self.decoder = Decoder(args=args, tokenizer=tokenizer)
 
-    def forward(self, src, trg, labels, train=True):
+    def forward(self, src, trg, labels, train=True, **kwargs):
         src_mask = self.make_pad_mask(src, src)
 
         src_trg_mask = self.make_pad_mask(trg, src)
