@@ -54,7 +54,7 @@ def main(args):
 
     preds = np.array(preds)
     labels = np.array(labels)
-    print(f'Accuracy trên Tập Test: {np.sum(preds == labels)}')
+    print(f'Accuracy trên Tập Test bằng Model của Nhóm: {np.sum(preds == labels)}')
 
 
 if __name__ == "__main__":
