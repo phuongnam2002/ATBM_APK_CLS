@@ -108,11 +108,17 @@ class FCG():
         xtest_mal, ytest_mal = feed_feat, np.ones(len(feed_feat))
 
         # Load training dataset
-        train_x, train_y = load_svmlight_file("data/fcg_dataset.csv",
+        train_x, train_y = load_svmlight_file("data/train/fcg_dataset.csv",
                                               n_features=15033,
                                               multilabel=False,
                                               zero_based=False,
                                               query_id=False)
+
+        test_x, test_y = load_svmlight_file("data/test/test.csv",
+                                            n_features=10000,
+                                            multilabel=False,
+                                            zero_based=False,
+                                            query_id=False)
 
         train_x = train_x.toarray()
         xtrain_ben = train_x[6896:]
